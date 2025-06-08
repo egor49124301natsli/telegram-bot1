@@ -36,4 +36,5 @@ async def activate_premium(message: types.Message):
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(premium_command, commands=['premium'])
     dp.register_message_handler(buy_1day, commands=['buy_1day'])
-    dp.register_message_handler(buy_1month, comma_
+    dp.register_message_handler(buy_1month, commands=['buy_1month'])
+
