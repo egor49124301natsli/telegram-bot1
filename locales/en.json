@@ -1,0 +1,9 @@
+{
+  "welcome": "👋 Welcome to Crypto-Bot!\n\nAvailable commands:\n- Crypto rates (/btc, /eth, /ton, /xrp)\n- Crypto news (/news)\n- Sports news (/sportnews)\n- Predictions and analytics (premium)\nUse menu or commands to interact.",
+  "no_news": "No fresh news at the moment.",
+  "no_sportnews": "No fresh sports news at the moment.",
+  "price_btc": "BTC/USDT rate on Binance: <b>{price}</b>",
+  "price_eth": "ETH/USDT rate on Binance: <b>{price}</b>",
+  "price_ton": "TON/USDT rate on Binance: <b>{price}</b>",
+  "price_xrp": "XRP/USDT rate on Binance: <b>{price}</b>"
+}

@@ -1,0 +1,42 @@
+import os
+from aiogram import Bot, Dispatcher, types, executor
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
+from dotenv import load_dotenv
+import json
+
+class Localization:
+    def __init__(self):
+        self.translations = {}
+        self.load_translations()
+
+    def load_translations(self):
+        for filename in os.listdir('locales'):
+            if filename.endswith('.json'):
+                lang = filename.split('.')[0]
+                with open(f'locales/{filename}', 'r', encoding='utf-8') as f:
+                    self.translations[lang] = json.load(f)
+
+    def get(self, key, lang):
+        return self.translations.get(lang, {}).get(key, key)
+
+i18n = Localization()
+
+# Загрузка переменных из .env
+load_dotenv()
+
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+
+bot = Bot(token=TELEGRAM_TOKEN, parse_mode=types.ParseMode.HTML)
+dp = Dispatcher(bot)
+dp.middleware.setup(LoggingMiddleware())
+
+# Импорт хендлеров
+from handlers import users, admin, premium
+
+users.register_handlers(dp)
+admin.register_handlers(dp)
+premium.register_handlers(dp)
+
+if __name__ == "__main__":
+    print("Бот запущен!")
+    executor.start_polling(dp, skip_updates=True)

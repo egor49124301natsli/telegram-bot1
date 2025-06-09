@@ -1,0 +1,9 @@
+{
+  "welcome": "👋 Witamy w Crypto-Bot!\n\nDostępne:\n- Kursy kryptowalut (/btc, /eth, /ton, /xrp)\n- Wiadomości kryptowalutowe (/news)\n- Wiadomości sportowe (/sportnews)\n- Prognozy i analizy (premium)\nUżyj menu lub poleceń, aby wchodzić w interakcje.",
+  "no_news": "Brak świeżych wiadomości w tym momencie.",
+  "no_sportnews": "Brak świeżych wiadomości sportowych w tym momencie.",
+  "price_btc": "Kurs BTC/USDT na Binance: <b>{price}</b>",
+  "price_eth": "Kurs ETH/USDT na Binance: <b>{price}</b>",
+  "price_ton": "Kurs TON/USDT na Binance: <b>{price}</b>",
+  "price_xrp": "Kurs XRP/USDT na Binance: <b>{price}</b>"
+}
