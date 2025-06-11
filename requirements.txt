@@ -5,4 +5,4 @@ stripe
 APScheduler
 aiogram
 fastapi
-uvicorn
+uvicorn[standard]
