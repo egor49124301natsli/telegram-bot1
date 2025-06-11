@@ -5,6 +5,7 @@ def get_binance_price(symbol: str) -> float:
     try:
         response = requests.get(url)
         response.raise_for_status()
+        print("Ответ Binance:", response.text)
         data = response.json()
         return float(data["price"])
     except Exception as e:

@@ -11,6 +11,7 @@ from services.news import get_crypto_news, get_latest_sport_news
 from services.anti_spam import AntiSpamMiddleware
 from database.session import add_user, get_all_users
 from handlers import users, admin, premium
+from handlers.admin import ADMIN_IDS, CHANNELS
 
 load_dotenv()
 
@@ -48,29 +49,23 @@ SPORTS_API_KEY = os.getenv('SPORTS_API_KEY')
 users.register_handlers(dp)
 admin.register_handlers(dp)
 premium.register_handlers(dp)
-
-@dp.message_handler(commands=['start', 'help'])
-async def send_welcome(message: types.Message):
-    text = i18n.get("welcome", message.from_user.language_code, "Welcome!")
-    await message.answer(text)
-
 @dp.message_handler(commands=['btc', 'eth', 'ton', 'xrp'])
 async def get_crypto_price(message: types.Message):
-    crypto = message.get_args()
-    if crypto == "btc":
-        price = get_binance_price("BTCUSDT")
-        await message.answer(f"BTC/USDT: {price}")
-    elif crypto == "eth":
-        price = get_binance_price("ETHUSDT")
-        await message.answer(f"ETH/USDT: {price}")
-    elif crypto == "ton":
-        price = get_binance_price("TONUSDT")
-        await message.answer(f"TON/USDT: {price}")
-    elif crypto == "xrp":
-        price = get_binance_price("XRPUSDT")
-        await message.answer(f"XRP/USDT: {price}")
+    crypto = message.get_command().replace("/", "").strip().lower()
+
+    mapping = {
+        "btc": "BTCUSDT",
+        "eth": "ETHUSDT",
+        "ton": "TONUSDT",
+        "xrp": "XRPUSDT"
+    }
+
+    if crypto in mapping:
+        price = get_binance_price(mapping[crypto])
+        await message.answer(f"{crypto.upper()}/USDT: {price}")
     else:
-        await message.answer("Invalid crypto.")
+        await message.answer("❌ Неверная команда. Используйте: /btc, /eth, /ton, /xrp")
+
 
 @dp.message_handler(commands=['news', 'sportnews'])
 async def get_news(message: types.Message):
@@ -149,6 +144,12 @@ async def broadcast_command(message: types.Message):
 
     await message.answer(f"✅ Sent to {sent} users.")
 
-if __name__ == '__main__':
-    print("Bot is running...")
-    executor.start_polling(dp, skip_updates=True)
+if __name__ == "__main__":
+    print("✅ Бот готов к запуску.")
+
+    # Безопасный запуск только если указано через окружение
+    if os.getenv("RENDER") or os.getenv("RUN_BOT") == "1":
+        executor.start_polling(dp, skip_updates=True)
+    else:
+        print("⚠️ Локальный запуск отключён (ожидается запуск на Render).")
+
