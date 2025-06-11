@@ -6,3 +6,4 @@ APScheduler
 aiogram
 fastapi
 uvicorn[standard]
+uvicorn[standard]  # force rebuild
