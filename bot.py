@@ -7,7 +7,7 @@ from aiogram.types import ParseMode
 from dotenv import load_dotenv
 
 from services.translator import translate
-from services.binance_api import get_binance_price
+from services.price_fallback import get_crypto_price
 from services.news import get_crypto_news, get_latest_sport_news
 from services.anti_spam import AntiSpamMiddleware
 from database.session import add_user, get_all_users
@@ -62,7 +62,7 @@ async def get_crypto_price(message: types.Message):
         "xrp": "XRPUSDT"
     }
     if crypto in mapping:
-        price = get_binance_price(mapping[crypto])
+        price = get_crypto_price(mapping[crypto])
         await message.answer(f"{crypto.upper()}/USDT: {price}")
     else:
         await message.answer("❌ Неверная команда. Используйте: /btc, /eth, /ton, /xrp")
