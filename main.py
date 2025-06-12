@@ -1,4 +1,5 @@
 import os
+from handlers import users, admin, premium
 from aiogram import Bot, Dispatcher, types, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from fastapi import FastAPI, Request
